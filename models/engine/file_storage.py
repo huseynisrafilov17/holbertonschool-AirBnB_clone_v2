@@ -21,6 +21,7 @@ class FileStorage:
             return filtered_objects
 
     def delete(self, obj=None):
+        """Deletes an object from storage"""
         if (obj is None):
             pass
         else:
