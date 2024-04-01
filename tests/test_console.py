@@ -35,7 +35,7 @@ class TestConsole(unittest.TestCase):
         tempout = StringIO()
         sys.stdout = tempout
         return tempout.getvalue()
-    
+
     def test_create_error(self):
         """
         test create
