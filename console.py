@@ -133,7 +133,7 @@ class HBNBCommand(cmd.Cmd):
                     setattr(new_instance, split_arg[0], float(split_arg[1]))
                 else:
                     setattr(new_instance, split_arg[0], int(split_arg[1]))
-            except:
+            except Exception:
                 Pass
         storage.save()
         print(new_instance.id)
