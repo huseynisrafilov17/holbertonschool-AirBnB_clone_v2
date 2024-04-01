@@ -44,7 +44,7 @@ class TestConsole(unittest.TestCase):
         sys.stdout = tempout
 
         self.hbtn.onecmd("create")
-        self.assertEqual(tempout.getvalue(),'** class name missing **\n')
+        self.assertEqual(tempout.getvalue(), '** class name missing **\n')
         tempout.close()
 
         tempout = StringIO()
