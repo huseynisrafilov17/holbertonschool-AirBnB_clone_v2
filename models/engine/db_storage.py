@@ -39,11 +39,8 @@ class DBStorage():
             obj.extend(self.__session.query(Review).all())
             obj.extend(self.__session.query(Amenity).all())
         else:
-            if isinstance(cls, str):
-                cls = eval(cls)
             obj = self.__session.query(cls)
-        return {"{}.{}"
-                .format(type(obj).__name__, i.id): i for i in obj}
+        return {"{}.{}".format(type(i).__name__, i.id): i for i in obj}
 
     def new(self, obj):
         """Create new row"""
