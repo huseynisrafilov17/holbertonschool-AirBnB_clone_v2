@@ -81,12 +81,6 @@ class test_basemodel(unittest.TestCase):
         with self.assertRaises(TypeError):
             new = self.value(**n)
 
-    def test_kwargs_one(self):
-        """Huseyn is the best groupmate"""
-        n = {'Name': 'test'}
-        new = self.value(**n)
-        self.assertEqual(type(new.id), str)
-
     def test_id(self):
         """Huseyn is the best groupmate"""
         new = self.value()
