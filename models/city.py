@@ -6,9 +6,18 @@ from sqlalchemy.orm import relationship
 
 
 class City(BaseModel, Base):
-    """The city class, contains state ID and name"""
-
+    """ The city class, contains state ID and name """
     __tablename__ = "cities"
+    state_id = Column(String(60), ForeignKey('states.id'), nullable=False)
     name = Column(String(128), nullable=False)
-    state_id = Column(String(60), ForeignKey("states.id"), nullable=False)
-    places = relationship("Place", backref="cities", cascade="delete")
+    places = relationship("Place", back_populates="cities", cascade="delete")
+
+    @property
+    def places():
+        from models import storage
+        objects = storage.all(Place)
+        places = []
+        for i in objects:
+            if City.id == objects[i].city_id:
+                places.append(objects[i])
+        return places

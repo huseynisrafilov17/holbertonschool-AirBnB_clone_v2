@@ -1,7 +1,6 @@
 #!/usr/bin/python3
 """This module defines a class User"""
 from models.base_model import BaseModel, Base
-from models.place import Place
 from sqlalchemy import Column, String, ForeignKey
 from sqlalchemy.orm import relationship
 
@@ -13,4 +12,14 @@ class User(BaseModel, Base):
     password = Column(String(128), nullable=False)
     first_name = Column(String(128), nullable=True)
     last_name = Column(String(128), nullable=True)
-    places = relationship("Place", backref="user", cascade="delete")
+    places = relationship("Place", back_populates="user", cascade="delete")
+
+    @property
+    def places():
+        from models import storage
+        objects = storage.all(Place)
+        places = []
+        for i in objects:
+            if User.id == objects[i].user_id:
+                places.append(objects[i])
+        return places
