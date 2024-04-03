@@ -141,3 +141,5 @@ Usage: <class_name>.update(<_id>, <dictionary>)
 ```
 <br>
 ###### Authors
+Huseyn Israfilov <huseynisrafilov17@gmail.com>
+Uzeyir Alirzayev <elirzayevuzeyir1@gmail.com>
