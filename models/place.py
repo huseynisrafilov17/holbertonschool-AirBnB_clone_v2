@@ -6,7 +6,6 @@ from models.review import Review
 from sqlalchemy import Column, String, Integer, Float, ForeignKey, Table
 from sqlalchemy.orm import relationship
 
-
 place_amenity = Table(
 "place_amenity", Base.metadata,
 Column("place_id", ForeignKey("places.id"), primary_key=True, nullable=False),
@@ -31,7 +30,7 @@ class Place(BaseModel, Base):
     amenity_ids = []
     reviews = relationship("Review", back_populates="place", cascade="delete")
     amenities = relationship("Amenity", secondary="place_amenities",
-                             viewonly=False, overlaps="place_amenities")
+                             viewonly=False)
 
     @property
     def reviews():
