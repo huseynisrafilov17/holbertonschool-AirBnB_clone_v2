@@ -13,25 +13,5 @@ class User(BaseModel, Base):
     password = Column(String(128), nullable=False)
     first_name = Column(String(128), nullable=True)
     last_name = Column(String(128), nullable=True)
-    places = relationship("Place", back_populates="user", cascade="delete")
-    reviews = relationship("Review", back_populates="user", cascade="delete")
-    
-    @property
-    def places():
-        from models import storage
-        objects = storage.all(Place)
-        places = []
-        for i in objects:
-            if User.id == objects[i].user_id:
-                places.append(objects[i])
-        return places
-
-    @property
-    def reviews():
-        from models import storage
-        objects = storage.all(Review)
-        reviews = []
-        for i in objects:
-            if User.id == objects[i].user_id:
-                reviews.append(objects[i])
-        return reviews
+    places = relationship("Place", backref="user", cascade="delete")
+    reviews = relationship("Review", backref="user", cascade="delete")
