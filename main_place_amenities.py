@@ -8,6 +8,7 @@ from models.city import City
 from models.amenity import Amenity
 from models.review import Review
 from models import storage
+
 # creation of a State
 state = State(name="California")
 state.save()
@@ -35,14 +36,17 @@ amenity_3 = Amenity(name="Oven")
 amenity_3.save()
 
 # link place_1 with 2 amenities
-place_1.amenity_ids.append(amenity_1.id)
-place_1.amenity_ids.append(amenity_2.id)
+place_1.amenities.append(amenity_1)
+place_1.amenities.append(amenity_2)
 
 # link place_2 with 3 amenities
-place_2.amenity_ids.append(amenity_1.id)
-place_2.amenity_ids.append(amenity_2.id)
-place_2.amenity_ids.append(amenity_3.id)
+place_2.amenities.append(amenity_1)
+place_2.amenities.append(amenity_2)
+place_2.amenities.append(amenity_3)
+place_1.save()
+place_2.save()
 
 storage.save()
+print(storage.all())
 
-print("Ok")
+print(len(storage.all()))

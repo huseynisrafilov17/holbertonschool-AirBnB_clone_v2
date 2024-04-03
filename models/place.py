@@ -5,6 +5,7 @@ from models.amenity import Amenity
 from models.review import Review
 from sqlalchemy import Column, String, Integer, Float, ForeignKey, Table
 from sqlalchemy.orm import relationship
+from os import getenv
 
 place_amenity = Table(
 "place_amenity", Base.metadata,
@@ -28,31 +29,32 @@ class Place(BaseModel, Base):
     latitude = Column(Float, nullable=True)
     longitude = Column(Float, nullable=True)
     amenity_ids = []
-    reviews = relationship("Review", back_populates="place", cascade="delete")
+    reviews = relationship("Review", cascade="delete")
     amenities = relationship("Amenity", secondary="place_amenity",
                              viewonly=False)
 
-    @property
-    def reviews():
-        from models import storage
-        objects = storage.all(Review)
-        reviews = []
-        for i in objects:
-            if Place.id == objects[i].place_id:
-                reviews.append(objects[i])
-        return reviews
+    if getenv('HBNB_TYPE_STORAGE') != 'db':
+        @property
+        def reviews():
+            from models import storage
+            objects = storage.all(Review)
+            reviews = []
+            for i in objects:
+                if Place.id == objects[i].place_id:
+                    reviews.append(objects[i])
+            return reviews
 
-    @property
-    def amenities(self):
-        from models import storage
-        objects = storage.all(Amenity)
-        amenities = []
-        for i in objects:
-            if objects[i].id in self.amenity_ids:
-                amenities.append(objects[i])
-        return amenities
+        @property
+        def amenities(self):
+            from models import storage
+            objects = storage.all(Amenity)
+            amenities = []
+            for i in objects:
+                if objects[i].id in self.amenity_ids:
+                    amenities.append(objects[i])
+            return amenities
 
-    @amenities.setter
-    def amenities(self, value):
-        if isinstance(value, Amenity):
-            self.amenity_ids.append(value.id)
+        @amenities.setter
+        def amenities(self, value):
+            if isinstance(value, Amenity):
+                self.amenity_ids.append(value.id)
