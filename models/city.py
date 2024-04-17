@@ -15,11 +15,11 @@ class City(BaseModel, Base):
 
     if getenv('HBNB_TYPE_STORAGE') != 'db':
         @property
-        def places():
+        def places(self):
             from models import storage
             objects = storage.all(Place)
             places = []
             for i in objects:
-                if City.id == objects[i].city_id:
+                if self.id == objects[i].city_id:
                     places.append(objects[i])
             return places

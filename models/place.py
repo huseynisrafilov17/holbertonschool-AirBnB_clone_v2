@@ -36,12 +36,12 @@ class Place(BaseModel, Base):
                              viewonly=False)
     if getenv('HBNB_TYPE_STORAGE') != 'db':
         @property
-        def reviews():
+        def reviews(self):
             from models import storage
             objects = storage.all(Review)
             reviews = []
             for i in objects:
-                if Place.id == objects[i].place_id:
+                if self.id == objects[i].place_id:
                     reviews.append(objects[i])
             return reviews
 
