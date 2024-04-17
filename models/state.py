@@ -19,7 +19,7 @@ class State(BaseModel, Base):
             from models import storage
             objects = storage.all(City)
             cities = []
-            for i in objects:
-                if State.id == objects[i].state_id:
+            for i in objects.keys():
+                if self.id == objects[i].state_id:
                     cities.append(objects[i])
             return cities
